@@ -59,6 +59,14 @@ gsm = full_gsm.loc[feature_order, sample_order]
 gsm = gsm.reset_index().copy()
 gsm = gsm.rename(columns={"index":"classifier_name"}).copy()
 
+def convert_numeric_columns_to_int(df):
+    for col in df.columns:
+        if pd.api.types.is_numeric_dtype(df[col]):
+            df[col] = pd.to_numeric(df[col], errors='coerce').astype("Int64")
+    return df
+
+gsm = convert_numeric_columns_to_int(gsm)
+
 outfile = args.output_dir + args.id + '.' + TODAY + '.GSM.tsv'
 print('output :', outfile)
 gsm.to_csv(outfile, sep='\t',  index=False)
