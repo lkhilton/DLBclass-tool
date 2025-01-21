@@ -245,6 +245,6 @@ scna_df.index = scna_df.index.str.upper()
 gsm = scna_df.reset_index().copy()
 gsm = gsm.rename(columns={"index":"classifier_name"}).copy()
 # GSM.index = GSM.index.str.upper()
-outfile = args.output_dir + args.id + '.' + TODAY + '.CNV.GSM.tsv'
+outfile = args.output_dir + "/" + args.id + '.' + TODAY + '.CNV.GSM.tsv'
 print('output :', outfile)
 gsm.to_csv(outfile, sep='\t', index=False)

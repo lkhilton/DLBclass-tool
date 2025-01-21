@@ -5,7 +5,7 @@ import src.format_data as fd
 
 
 def classify_samples(gsm_file, cohort, output_dir):
-    output_fn = output_dir + cohort.replace(' ', '').strip() + '_classified_samples.tsv'
+    output_fn = output_dir + "/" + cohort.replace(' ', '').strip() + '_classified_samples.tsv'
     print('Predictions will be written to:\n\n', output_fn)
 
     gsm = pd.read_csv(gsm_file, sep='\t', index_col=0)
