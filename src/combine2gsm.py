@@ -56,6 +56,7 @@ feature_order = list(pd.read_csv(args.feature_order_file, index_col=0, header=No
 #feature_order = ['X'+x for x in feature_order]
 
 gsm = full_gsm.loc[feature_order, sample_order]
+gsm = gsm.astype("Int64")
 gsm = gsm.reset_index().copy()
 gsm = gsm.rename(columns={"index":"classifier_name"}).copy()
 
