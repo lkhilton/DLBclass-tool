@@ -257,7 +257,7 @@ scna_df = scna_df.loc[idxKEEP,:]
 scna_df = scna_df.sort_values(by='classifier_name')
 scna_df = scna_df.reset_index(drop=True)
 
-outfile = args.output_dir + args.id + '.' + TODAY + '.CNV.GSM.tsv'
+outfile = args.output_dir + "/" + args.id + '.' + TODAY + '.CNV.GSM.tsv'
 scna_df.to_csv(outfile, sep='\t',index=False)
 print('complete')
 
