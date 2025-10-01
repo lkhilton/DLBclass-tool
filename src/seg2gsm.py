@@ -27,7 +27,7 @@ parser.add_argument('-a', '--arm_significance_file',
                     help='CNV arm-level regions to include.',
                     required=False, type=str, default='../../data_tables/additional_gsm_inputs/DLBCL_broad_significance.19Aug2024.tsv')
 parser.add_argument('-f', '--focal_file',
-                    help='CNV foca; regions to include.',
+                    help='CNV focal regions to include.',
                     required=False, type=str,default='../../data_tables/additional_gsm_inputs/DLBCL_focal_peaks.18Aug2024.tsv')
 parser.add_argument('-o', '--output_dir',
                     help='Output directory.',
@@ -89,11 +89,9 @@ segs['log_segment_mean'] = segs['Segment_Mean'].copy(deep=True)
 segs['Segment_Mean'] = np.power(2, (segs['log_segment_mean'] + 1)) - 2
 
 
-BA = arm_level_significance.loc[(arm_level_significance['significant_amplification'] == 1) &
-                                (arm_level_significance['amplification_cohort'].str.contains('DLBCL'))]
+BA = arm_level_significance.loc[(arm_level_significance['significant_amplification'] == 1)] 
 
-BD = arm_level_significance.loc[(arm_level_significance['significant_deletion'] == 1) &
-                                (arm_level_significance['deletion_cohort'].str.contains('DLBCL'))]
+BD = arm_level_significance.loc[(arm_level_significance['significant_deletion'] == 1)] 
 
 # Arm dels
 arm_del_df = pd.DataFrame(0, index=BD['arm'] + '.DEL', columns=sorted(sample_set)) #segs['Sample'].unique()))
