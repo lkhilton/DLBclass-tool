@@ -35,6 +35,9 @@ parser.add_argument('-o', '--output_dir',
 parser.add_argument('-g','--genome_build',
                     help='Genome build: hg19, hg38.',
                     required=False, type=str, default='hg19')
+parser.add_argument('-t', '--thresholds',
+                    help='Threshold for CNV events: lenient (default) or stringent. lenient: single amp=0.1, single del=-0.1, double amp=0.9, double del=-0.9; stringent: single amp=0.321, single del=-0.415, double amp=0.81, double del=-2.0',
+                    required=False, type=str, default='lenient')
 
 args = parser.parse_args()
 
@@ -54,10 +57,20 @@ segs = segs.loc[~segs['Chromosome'].isin(['X', 'Y'])].copy(deep=True)
 # subset to sample_set 
 segs = segs.loc[segs['Sample'].isin(sample_set)].copy(deep=True) # reset_index()
 
-single_amp_threshold = 0.1
-single_del_threshold = -0.1
-double_amp_threshold = 0.9
-double_del_threshold = -0.9
+# Whether a segment is called gained or deleted depends on whether CN-2 exceeds one of these thresholds
+if args.thresholds == 'lenient': 
+    single_amp_threshold = 0.1
+    single_del_threshold = -0.1
+    double_amp_threshold = 0.9
+    double_del_threshold = -0.9
+elif args.thresholds == 'stringent':
+    single_amp_threshold = 0.5
+    single_del_threshold = -0.5
+    double_amp_threshold = 1.5
+    double_del_threshold = -1.5
+else: 
+    raise ValueError("Invalid value for --thresholds. Please specify 'lenient' or 'stringent'.")
+
 # arm length fraction threshold of 2 corresponds to the 50% median 
 arm_length_fraction_threshold = 2
 
